@@ -47,8 +47,10 @@ typedef struct		s_dda
 	double			side_dist[2];
 	double			delta_dist[2];
 	double			wall_dist;
+	int				line_height;
 	int				map_pos[2];
 	int				step[2];
+	int				side;
 }					t_dda;
 
 typedef struct		s_ctrls
@@ -97,7 +99,6 @@ typedef struct		s_game
 	int				nb_sprites;
 	double			pos[2];
 	double			dir[2];
-	double			ray[2];
 	double			cam_plane[2];
 	int				fd_save;
 	t_mlx			mlx;
@@ -123,9 +124,9 @@ t_bool				finish_init(t_game *game);
 void				init_camera(t_game *game);
 t_bool				init_screen(t_game *game);
 
-void        		draw(t_game *game);
-void				draw_walls(t_game *game);
-t_bool				is_hit(t_game *game, t_dda *dda, t_text *text, double ray[2]);
+void				dda(t_game *game, double ray[2], int i);
+t_dda				init_dda(t_game *game, double ray[2]);
+t_bool				is_hit(t_game *game, t_dda *ddata, double ray[2]);
 
 /**
  * vectors

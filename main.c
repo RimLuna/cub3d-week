@@ -48,12 +48,24 @@ t_bool		is_hit(t_game *game, t_dda *ddata, double ray[2])
 	return ((t_bool)(game->map[ddata->map_pos[0]][ddata->map_pos[1]] == 1));
 }
 
-void		draw_line(double start, double end, int x, int color)
+void		put_it(t_img screen, int i, int j, int color)
+{
+
+}
+
+void		draw_line(double start, double end, int x, t_game *game, int color)
 {
 	int		j;
 
+	start = start < 0 ? 0 : start;
+	end = end >= game->scr_h ? game->scr_h - 1 : end;
 	j = 0;
 	while (j < start)
+		put_it(game->screen, x, j++, game->color_ceil);
+	while (j < end)
+		put_it(game->screen, x, j++, color);
+	while (j < game->scr_h)
+		put_it(game->screen, x, j++, game->color_floor);
 }
 
 void		dda(t_game *game, double ray[2], int i)
@@ -81,7 +93,7 @@ void		dda(t_game *game, double ray[2], int i)
 	int		color;
 	color = lookupColor[game->map[ddata.map_pos[0]][ddata.map_pos[0]]];
 	color = ddata.side ? color / 2 : color;
-	draw_line(start, end, i, color);
+	draw_line(start, end, i, game, color);
 }
 
 void		camera(t_game *game)

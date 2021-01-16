@@ -4,9 +4,10 @@ SO ./textures/bricks.xpm
 WE ./textures/bricks.xpm
 EA ./textures/bricks.xpm
 S ./textures/bricks.xpm
-C 153,153,255
-F 153,51,51
-111111
-100E01
-100001
-111111
+C 234,178,204
+F 70,53,61
+1111111111
+1000001111
+10S00000001
+1000000001
+1111111111

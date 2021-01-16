@@ -35,7 +35,7 @@ $(MLX_LIB):
 			@make -C $(MLXDIR)
 
 clean:
-			rm -rf $(SRCS:.c=.o) $(BONUS:.c=.o)
+			rm -rf $(SRCS:.c=.o)
 			make -C $(MLXDIR) clean
 
 fclean:		clean

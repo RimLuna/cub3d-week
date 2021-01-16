@@ -28,7 +28,7 @@ t_dda		init_dda(t_game *game, double ray[2])
 	return (ddata);
 }
 
-t_bool		is_hit(t_game *game, t_dda *ddata, double ray[2])
+t_bool		is_hit(t_game *game, t_dda *ddata)
 {
 	t_bool		hit;
 
@@ -50,7 +50,19 @@ t_bool		is_hit(t_game *game, t_dda *ddata, double ray[2])
 
 void		put_it(t_img screen, int i, int j, int color)
 {
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+	char			*ptr;
 
+	r = (unsigned char)(color >> 16);
+	g = (unsigned char)((color % 65536) >> 8);
+	b = (unsigned char)(color % 256);
+
+	ptr = screen.data + j * screen.size_line + i * (screen.bpp >> 3);
+	*ptr = screen.endian ? r : b;
+	*(ptr + 1) = g;
+	*(ptr + 2) = screen.endian ? b : r;
 }
 
 void		draw_line(double start, double end, int x, t_game *game, int color)
@@ -76,7 +88,7 @@ void		dda(t_game *game, double ray[2], int i)
 	hit = FALSE;
 	ddata = init_dda(game, ray);
 	while (!hit)
-		hit = is_hit(game, &ddata, ray);
+		hit = is_hit(game, &ddata);
 	ddata.wall_dist = ddata.side == 0
 		? (ddata.map_pos[0] - game->pos[0] + (1 - ddata.step[0]) / 2) / ray[0]
 		: (ddata.map_pos[1] - game->pos[1] + (1 - ddata.step[1]) / 2) / ray[1];
@@ -91,7 +103,7 @@ void		dda(t_game *game, double ray[2], int i)
 	end = ddata.line_height / 2 + game->scr_h / 2;
 	end = end >= game->scr_h ? game->scr_h - 1 : end;
 	int		color;
-	color = lookupColor[game->map[ddata.map_pos[0]][ddata.map_pos[0]]];
+	color = 0xBB0055;
 	color = ddata.side ? color / 2 : color;
 	draw_line(start, end, i, game, color);
 }
@@ -108,10 +120,16 @@ void		camera(t_game *game)
 		camera_x = 2.0 * i / game->scr_w - 1;
 		ray[0] = game->dir[0] + game->cam_plane[0] * camera_x;
 		ray[1] = game->dir[1] + game->cam_plane[1] * camera_x;
-		printf("cam_x: %f i:%d Rx:%f Ry:%f\n", camera_x, i, ray[0], ray[1]);
 		dda(game, ray, i);
 		i++;
 	}
+}
+
+void		draw(t_game *game)
+{
+	camera(game);
+	mlx_put_image_to_window(game->mlx.ptr, game->mlx.win,
+		game->screen.ptr, 0, 0);
 }
 
 int			main(int ac, char **av)
@@ -119,7 +137,8 @@ int			main(int ac, char **av)
 	t_game		*game;
 	if (!(game = game_init(ac, av)))
 		return (ERROR);
-	camera(game);
+	draw(game);
+	mlx_loop(game->mlx.ptr);
 	quit(game, SUCCESS);
 	return (SUCCESS);
 }

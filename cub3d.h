@@ -126,7 +126,7 @@ t_bool				init_screen(t_game *game);
 
 void				dda(t_game *game, double ray[2], int i);
 t_dda				init_dda(t_game *game, double ray[2]);
-t_bool				is_hit(t_game *game, t_dda *ddata, double ray[2]);
+t_bool				is_hit(t_game *game, t_dda *ddata);
 
 /**
  * vectors

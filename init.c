@@ -55,9 +55,10 @@ t_game		*game_init(int ac, char **av)
 		return (NULL);
 	if (ac < 2)
 		parserror(game, "where the f is the file\n");
-	else if (ft_strcmp(av[1] + ft_strlen(av[1]) - 4, ".cub") != 0)
-		parserror(game, "ext invalid!!\n");
-	else if ((game->fd = open(av[1], O_RDONLY)) < 0 ||
+	else 
+		if (ft_strcmp(av[1] + ft_strlen(av[1]) - 4, ".cub") != 0)
+			parserror(game, "ext invalid!!\n");
+	if ((game->fd = open(av[1], O_RDONLY)) < 0 ||
 				(open(av[1], O_DIRECTORY) != -1))
 		parserror(game, "no file or is it a dir??\n");
 	parse_file(game);

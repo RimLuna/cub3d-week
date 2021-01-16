@@ -97,6 +97,7 @@ typedef struct		s_game
 	int				nb_sprites;
 	double			pos[2];
 	double			dir[2];
+	double			ray[2];
 	double			cam_plane[2];
 	int				fd_save;
 	t_mlx			mlx;
@@ -125,6 +126,11 @@ t_bool				init_screen(t_game *game);
 void        		draw(t_game *game);
 void				draw_walls(t_game *game);
 t_bool				is_hit(t_game *game, t_dda *dda, t_text *text, double ray[2]);
+
+/**
+ * vectors
+ */
+void		v_scale(double a, double v[2], double u[2]);
 
 /**
  * all parse

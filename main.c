@@ -1,135 +1,65 @@
 #include "cub3d.h"
 #include <stdio.h>
 
-int			lookupColor[] =
+void		exit_hook(t_game *game)
 {
-	0xFFF5CC,
-	0xBB0055
-};
-
-t_dda		init_dda(t_game *game, double ray[2])
-{
-	t_dda	ddata;
-
-	ddata.delta_dist[0] = fabs(1.0 / ray[0]);
-	ddata.delta_dist[1] = fabs(1.0 / ray[1]);
-	if (ray[0] * ray[1] == 0)
-		printf("%f %f\n", ddata.delta_dist[0], ddata.delta_dist[1]);
-	ddata.map_pos[0] = floor(game->pos[0]);
-	ddata.map_pos[1] = floor(game->pos[1]);
-	ddata.step[0] = (ray[0] < 0) ? -1 : 1;
-	ddata.step[1] = (ray[1] < 0) ? -1 : 1;
-	ddata.side_dist[0] = (ray[0] < 0)
-		? (game->pos[0] - ddata.map_pos[0]) * ddata.delta_dist[0]
-		: (ddata.map_pos[0] + 1.0 - game->pos[0]) * ddata.delta_dist[0];
-	ddata.side_dist[1] = (ray[1] < 0)
-		? (game->pos[1] - ddata.map_pos[1]) * ddata.delta_dist[1]
-		: (ddata.map_pos[1] + 1.0 - game->pos[1]) * ddata.delta_dist[1];
-	return (ddata);
+	quit(game, SUCCESS);
 }
 
-t_bool		is_hit(t_game *game, t_dda *ddata)
+t_bool		move(t_game *game)
 {
-	t_bool		hit;
+	double		dx;
+	double		dy;
+	double		speed;
 
-	hit = FALSE;
-	if (ddata->side_dist[0] < ddata->side_dist[1])
+	speed = 0.15;
+	if (!(game->ctrls.w || game->ctrls.s || game->ctrls.a || game->ctrls.d))
+		return (FALSE);
+	if (game->ctrls.w || game->ctrls.s)
 	{
-		ddata->side_dist[0] += ddata->delta_dist[0];
-		ddata->map_pos[0] += ddata->step[0];
-		ddata->side = 0;
+		dx = game->dir[0] * (game->ctrls.w ? speed : -speed);
+		dy = game->dir[1] * (game->ctrls.w ? speed : -speed);
 	}
 	else
 	{
-		ddata->side_dist[1] += ddata->delta_dist[1];
-		ddata->map_pos[1] += ddata->step[1];
-		ddata->side = 1;
+		dx = game->cam_plane[0] * (game->ctrls.d ? speed : -speed);
+		dy = game->cam_plane[1] * (game->ctrls.d ? speed : -speed);
 	}
-	return ((t_bool)(game->map[ddata->map_pos[0]][ddata->map_pos[1]] == 1));
-}
-
-void		put_it(t_img screen, int i, int j, int color)
-{
-	unsigned char	r;
-	unsigned char	g;
-	unsigned char	b;
-	char			*ptr;
-
-	r = (unsigned char)(color >> 16);
-	g = (unsigned char)((color % 65536) >> 8);
-	b = (unsigned char)(color % 256);
-
-	ptr = screen.data + j * screen.size_line + i * (screen.bpp >> 3);
-	*ptr = screen.endian ? r : b;
-	*(ptr + 1) = g;
-	*(ptr + 2) = screen.endian ? b : r;
-}
-
-void		draw_line(double start, double end, int x, t_game *game, int color)
-{
-	int		j;
-
-	start = start < 0 ? 0 : start;
-	end = end >= game->scr_h ? game->scr_h - 1 : end;
-	j = 0;
-	while (j < start)
-		put_it(game->screen, x, j++, game->color_ceil);
-	while (j < end)
-		put_it(game->screen, x, j++, color);
-	while (j < game->scr_h)
-		put_it(game->screen, x, j++, game->color_floor);
-}
-
-void		dda(t_game *game, double ray[2], int i)
-{
-	t_bool		hit;
-	t_dda		ddata;
-
-	hit = FALSE;
-	ddata = init_dda(game, ray);
-	while (!hit)
-		hit = is_hit(game, &ddata);
-	ddata.wall_dist = ddata.side == 0
-		? (ddata.map_pos[0] - game->pos[0] + (1 - ddata.step[0]) / 2) / ray[0]
-		: (ddata.map_pos[1] - game->pos[1] + (1 - ddata.step[1]) / 2) / ray[1];
-	game->depth_buffer[i] = ddata.wall_dist;
-	ddata.line_height = game->scr_h / ddata.wall_dist;
-
-	int		start;
-	int		end;
-
-	start = -ddata.line_height / 2 + game->scr_h / 2;
-	start = start < 0 ? 0 : start;
-	end = ddata.line_height / 2 + game->scr_h / 2;
-	end = end >= game->scr_h ? game->scr_h - 1 : end;
-	int		color;
-	color = 0xBB0055;
-	color = ddata.side ? color / 2 : color;
-	draw_line(start, end, i, game, color);
-}
-
-void		camera(t_game *game)
-{
-	double		camera_x;
-	int			i;
-	double		ray[2];
-
-	i = 0;
-	while (i < game->scr_w)
+	
+	if (game->map[(int)(game->pos[0] + dx)][(int)(game->pos[1] + dy)] != 1)
 	{
-		camera_x = 2.0 * i / game->scr_w - 1;
-		ray[0] = game->dir[0] + game->cam_plane[0] * camera_x;
-		ray[1] = game->dir[1] + game->cam_plane[1] * camera_x;
-		dda(game, ray, i);
-		i++;
+		game->pos[0] += dx;
+		game->pos[1] += dy;
 	}
+	return (TRUE);
 }
 
-void		draw(t_game *game)
+t_bool	rotate(t_game *game)
 {
-	camera(game);
-	mlx_put_image_to_window(game->mlx.ptr, game->mlx.win,
-		game->screen.ptr, 0, 0);
+	double	tmp;
+	double	angle;
+
+	if (!game->ctrls.right && !game->ctrls.left)
+		return (FALSE);
+	angle = (game->ctrls.left) ? M_PI / 100 : -M_PI / 100;
+	tmp = game->dir[0];
+	game->dir[0] = tmp * cos(angle) - game->dir[1] * sin(angle);
+	game->dir[1] = tmp * sin(angle) + game->dir[1] * cos(angle);
+	tmp = game->cam_plane[0];
+	game->cam_plane[0] = tmp * cos(angle) - game->cam_plane[1] * sin(angle);
+	game->cam_plane[1] = tmp * sin(angle) + game->cam_plane[1] * cos(angle);
+	return (TRUE);
+}
+
+t_bool		this_game_is_stupid(t_game *game)
+{
+	t_bool		huh;
+
+	huh = move(game);
+	huh = rotate(game) | huh;
+	if (huh)
+		draw(game);
+	return (TRUE);
 }
 
 int			main(int ac, char **av)
@@ -138,6 +68,10 @@ int			main(int ac, char **av)
 	if (!(game = game_init(ac, av)))
 		return (ERROR);
 	draw(game);
+	mlx_hook(game->mlx.win, 2, 0, &key_pressed, game);
+	mlx_hook(game->mlx.win, 3, 0, &key_released, game);
+	mlx_hook(game->mlx.win, 17, 0, &exit_hook, game);
+	mlx_loop_hook(game->mlx.ptr, this_game_is_stupid, game);
 	mlx_loop(game->mlx.ptr);
 	quit(game, SUCCESS);
 	return (SUCCESS);

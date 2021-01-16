@@ -1,6 +1,8 @@
 NAME =		cub3D
 
-SRCS=		vectors.c \
+SRCS=		keys.c \
+			draw.c \
+			vectors.c \
 			init_necessary.c \
 			init_map.c \
 			parse_things.c \

@@ -10,13 +10,20 @@
 # define SUCCESS 0
 # define ERROR 1
 
-# define KEY_A 113
-# define KEY_S 115
-# define KEY_D 100
-# define KEY_W 122
-# define KEY_ESC 65307
-# define KEY_LEFT 65361
-# define KEY_RIGHT 65363
+/**
+ * https://github.com/Adgeff/mlx_keycode/blob/master/mlx_keycode.h
+ */
+# define KEY_A 0
+# define KEY_S 1
+# define KEY_D 2
+# define KEY_W 13
+
+# define KEY_LEFT 123
+# define KEY_RIGHT 124
+# define KEY_DOWN 125
+# define KEY_UP 126
+
+# define KEY_ESC 53
 
 typedef int			t_bool;
 
@@ -124,6 +131,13 @@ t_bool				finish_init(t_game *game);
 void				init_camera(t_game *game);
 t_bool				init_screen(t_game *game);
 
+/**
+ * draw
+ */
+void				draw(t_game *game);
+void				camera(t_game *game);
+void				draw_line(double start, double end, int x, t_game *game, int color);
+void				put_it(t_img screen, int i, int j, int color);
 void				dda(t_game *game, double ray[2], int i);
 t_dda				init_dda(t_game *game, double ray[2]);
 t_bool				is_hit(t_game *game, t_dda *ddata);
@@ -131,7 +145,7 @@ t_bool				is_hit(t_game *game, t_dda *ddata);
 /**
  * vectors
  */
-void		v_scale(double a, double v[2], double u[2]);
+void				v_scale(double a, double v[2], double u[2]);
 
 /**
  * all parse

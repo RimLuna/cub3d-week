@@ -36,18 +36,18 @@ t_bool		move(t_game *game)
 
 t_bool	rotate(t_game *game)
 {
-	double	tmp;
+	double	dir;
 	double	angle;
 
 	if (!game->ctrls.right && !game->ctrls.left)
 		return (FALSE);
 	angle = (game->ctrls.left) ? M_PI / 100 : -M_PI / 100;
-	tmp = game->dir[0];
-	game->dir[0] = tmp * cos(angle) - game->dir[1] * sin(angle);
-	game->dir[1] = tmp * sin(angle) + game->dir[1] * cos(angle);
-	tmp = game->cam_plane[0];
-	game->cam_plane[0] = tmp * cos(angle) - game->cam_plane[1] * sin(angle);
-	game->cam_plane[1] = tmp * sin(angle) + game->cam_plane[1] * cos(angle);
+	dir = game->dir[0];
+	game->dir[0] = dir * cos(angle) - game->dir[1] * sin(angle);
+	game->dir[1] = dir * sin(angle) + game->dir[1] * cos(angle);
+	dir = game->cam_plane[0];
+	game->cam_plane[0] = dir * cos(angle) - game->cam_plane[1] * sin(angle);
+	game->cam_plane[1] = dir * sin(angle) + game->cam_plane[1] * cos(angle);
 	return (TRUE);
 }
 

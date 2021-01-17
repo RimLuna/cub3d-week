@@ -1,7 +1,7 @@
 NAME =		cub3D
 
 SRCS=		keys.c \
-			draw.c \
+			draw2.c \
 			vectors.c \
 			init_necessary.c \
 			init_map.c \

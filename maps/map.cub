@@ -1,13 +1,11 @@
 R 800 400
-NO ./textures/bricks.xpm
+NO ./textures/grass.xpm
 SO ./textures/bricks.xpm
-WE ./textures/bricks.xpm
-EA ./textures/bricks.xpm
+WE ./textures/wallpaper.xpm
+EA ./textures/wood.xpm
 S ./textures/bricks.xpm
-C 234,178,204
+C 234,178,0
 F 70,53,61
 1111111111
-1000001111
-10S00000001
-1000000001
-1111111111
+100W001
+1111111

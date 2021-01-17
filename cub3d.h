@@ -57,7 +57,6 @@ typedef struct		s_dda
 	int				line_height;
 	int				map_pos[2];
 	int				step[2];
-	int				side;
 }					t_dda;
 
 typedef struct		s_ctrls
@@ -136,12 +135,19 @@ t_bool				init_screen(t_game *game);
  */
 void				draw(t_game *game);
 void				camera(t_game *game);
-void				draw_line(double start, double end, int x, t_game *game, int color);
+
+/****
+ * TMP DELETE
+ * 
+ */
+void				draw_2(t_game *game, int i, t_text texture);
+t_bool				is_hit(t_game *game, t_dda *dda, t_text *text, double ray[2]);
+
+// void				draw_line(double start, double end, int x, t_game *game, t_text texture);
 void				put_it(t_img screen, int i, int j, int color);
 void				dda(t_game *game, double ray[2], int i);
 t_dda				init_dda(t_game *game, double ray[2]);
-t_bool				is_hit(t_game *game, t_dda *ddata);
-
+// t_bool				is_hit(t_game *game, t_dda *ddata, t_text *texture, double ray[2]);
 /**
  * vectors
  */

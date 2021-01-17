@@ -10,6 +10,9 @@
 # define SUCCESS 0
 # define ERROR 1
 
+# define SPEED 15
+# define TURN 0.05
+
 /**
  * https://github.com/Adgeff/mlx_keycode/blob/master/mlx_keycode.h
  */
@@ -136,18 +139,11 @@ t_bool				init_screen(t_game *game);
 void				draw(t_game *game);
 void				camera(t_game *game);
 
-/****
- * TMP DELETE
- * 
- */
-void				draw_2(t_game *game, int i, t_text texture);
-t_bool				is_hit(t_game *game, t_dda *dda, t_text *text, double ray[2]);
-
-// void				draw_line(double start, double end, int x, t_game *game, t_text texture);
+void			draw_line(int x, t_game *game, t_text the_texture);
 void				put_it(t_img screen, int i, int j, int color);
 void				dda(t_game *game, double ray[2], int i);
 t_dda				init_dda(t_game *game, double ray[2]);
-// t_bool				is_hit(t_game *game, t_dda *ddata, t_text *texture, double ray[2]);
+t_bool				is_hit(t_game *game, t_dda *ddata, t_text *texture, double ray[2]);
 /**
  * vectors
  */

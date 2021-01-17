@@ -17,8 +17,8 @@ void		parse_res(t_game *game, char *pline)
 	pline = rmempty(pline);
 	if (game->scr_h == 0 || game->scr_w == 0 || ft_strlen(pline) > 0)
 		parserror(game, "fcking res\n");
-	game->scr_w = (game->scr_w > 1098) ? 1098 : (game->scr_w < 800 ? 800 : game->scr_w);
-	game->scr_h = (game->scr_h > 1000) ? 1000 : (game->scr_h < 480 ? 480 : game->scr_h);
+	// game->scr_w = (game->scr_w > 1098) ? 1098 : (game->scr_w < 800 ? 800 : game->scr_w);
+	// game->scr_h = (game->scr_h > 1000) ? 1000 : (game->scr_h < 480 ? 480 : game->scr_h);
 	free(pline);
 }
 

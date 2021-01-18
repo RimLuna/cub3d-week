@@ -127,7 +127,7 @@ void		dda(t_game *game, double ray[2], int i)
 	draw_line(i, game, texture);
 }
 
-void		camera(t_game *game)
+void		wallz(t_game *game)
 {
 	double		camera_x;
 	int			i;
@@ -144,9 +144,15 @@ void		camera(t_game *game)
 	}
 }
 
+void		spr1tes(t_game *game)
+{
+
+}
+
 void		draw(t_game *game)
 {
-	camera(game);
+	wallz(game);
+	spr1tes(game);
 	mlx_put_image_to_window(game->mlx.ptr, game->mlx.win,
 		game->screen.ptr, 0, 0);
 }

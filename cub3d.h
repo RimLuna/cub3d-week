@@ -137,9 +137,10 @@ t_bool				init_screen(t_game *game);
  * draw
  */
 void				draw(t_game *game);
-void				camera(t_game *game);
+void				wallz(t_game *game);
+void				spr1tes(t_game *game);
 
-void			draw_line(int x, t_game *game, t_text the_texture);
+void				draw_line(int x, t_game *game, t_text the_texture);
 void				put_it(t_img screen, int i, int j, int color);
 void				dda(t_game *game, double ray[2], int i);
 t_dda				init_dda(t_game *game, double ray[2]);

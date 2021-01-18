@@ -1,10 +1,10 @@
 #include "cub3d.h"
 
-int			lookupColor[] =
-{
-	0xFFF5CC,
-	0xBB0055
-};
+// int			lookupColor[] =
+// {
+// 	0xFFF5CC,
+// 	0xBB0055
+// };
 
 t_dda		init_dda(t_game *game, double ray[2])
 {
@@ -190,12 +190,12 @@ void		ver_sprite(t_game *game, t_sprited sprited, int i, int sprite_box_x[2])
 
 	sprite_box_y[0] = game->scr_h / 2 - sprited.size / 2;
 	sprite_box_y[1] = game->scr_h / 2 + sprited.size / 2;
-	j = (sprite_box_y[0] < 0 ? 0 : sprite_box_y[0]);
+	j = (sprite_box_y[0] < 0) ? 0 : sprite_box_y[0];
 	while (j < (sprite_box_y[1] >= game->scr_h ? game->scr_h - 1 : sprite_box_y[1]))
 	{
 		color = texture_to_color(game->sprites[sprited.i].texture,
 			((i - sprite_box_x[0]) * 1.0) / (sprite_box_x[1] - sprite_box_x[0]),
-			((i - sprite_box_y[0]) * 1.0) / (sprite_box_y[1] - sprite_box_y[0]));
+			((j - sprite_box_y[0]) * 1.0) / (sprite_box_y[1] - sprite_box_y[0]));
 		if (color != 0)
 			put_it(game->screen, i, j, color);
 		j++;

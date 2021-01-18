@@ -24,6 +24,35 @@ void		init_textures(t_game *game)
 	}
 }
 
+t_bool		init_sprites(t_game *game)
+{
+	int		i;
+	int		j;
+	int		sprite_i;
+
+	if (!(game->sprites = ft_calloc(game->nb_sprites * sizeof(t_sprite))))
+		return (FALSE);
+	i = 0;
+	sprite_i = 0;
+	while (i < game->scr_h)
+	{
+		j = 0;
+		while (j < game->scr_w)
+		{
+			if (game->map[i][j] == 2)
+			{
+				game->sprites[sprite_i].texture = game->sprite_txt;
+				game->sprites[sprite_i].pos[0] = i;
+				game->sprites[sprite_i].pos[1] = j;
+				sprite_i++;
+			}
+			j++;
+		}
+		i++;
+	}
+	return (TRUE);
+}
+
 t_bool		finish_init(t_game *game)
 {
 	if (!parse_map2(game))
@@ -32,6 +61,8 @@ t_bool		finish_init(t_game *game)
 	if (!(game->mlx.ptr = mlx_init()))
 		return (FALSE);
 	init_textures(game);
+	if (!init_sprites(game))
+		return (FALSE);
 	if (!(game->depth_buffer = ft_calloc(game->scr_w, sizeof(double))))
 		return (FALSE);
 	if (!init_screen(game))

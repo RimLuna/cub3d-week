@@ -146,7 +146,24 @@ void		wallz(t_game *game)
 
 void		spr1tes(t_game *game)
 {
-
+	/**
+	 * while raycasting walls, store perp distance of each
+	 * vertical stripe
+	 * calculate distancce from each sprite to player
+	 * use distance to sort sprites
+	 * project sprite on the cam plane (in 2D)
+	 * => sub(player_pos, sprite_pos)
+	 * => then multiply the result with
+	 * inverse on the 2x2 cam matrix
+	 * calculate size of sprite using perp distance
+	 * draw sprite vertical stripe
+	 * BUT dont draw verStripe if the distance is further
+	 * away than 1D ZBuffer of the walls of curr_stripe
+	 * draw vertical stripe pixel by pixel
+	 * make sure there's an invisible color
+	 * or all stripes will look like rectangles?
+	 */
+	
 }
 
 void		draw(t_game *game)

@@ -11,9 +11,8 @@ t_bool		move(t_game *game)
 	double		dx;
 	double		dy;
 	double		speed;
-	double		k;
 
-	speed = 0.12;
+	speed = 0.15;
 	if (!(game->ctrls.w || game->ctrls.s || game->ctrls.a || game->ctrls.d))
 		return (FALSE);
 	if (game->ctrls.w || game->ctrls.s)
@@ -39,7 +38,6 @@ t_bool	rotate(t_game *game)
 {
 	double	dir;
 	double	angle;
-	double	speed;
 
 	if (!game->ctrls.right && !game->ctrls.left)
 		return (FALSE);

@@ -89,7 +89,7 @@ void		dda(t_game *game, double ray[2], int i)
 	ddata.wall_dist = ddata.side == 0
 		? (ddata.map_pos[0] - game->pos[0] + (1 - ddata.step[0]) / 2) / ray[0]
 		: (ddata.map_pos[1] - game->pos[1] + (1 - ddata.step[1]) / 2) / ray[1];
-	game->depth_buffer[i] = ddata.wall_dist;
+	game->z_buffer[i] = ddata.wall_dist;
 	ddata.line_height = game->scr_h / ddata.wall_dist;
 
 	int		start;

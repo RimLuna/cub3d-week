@@ -114,7 +114,7 @@ t_bool		parse_map2(t_game *game)
 	game->map_w = 0;
 	while (i < game->map_h)
 		get_h(game, i++);
-	free (p);
+	free(p);
 	init_map(game);
 	check_map(game);
 	if (game->error)

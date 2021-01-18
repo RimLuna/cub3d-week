@@ -22,6 +22,7 @@ void		init_textures(t_game *game)
 			game->textures[side].filename);
 		side++;
 	}
+	load_texture(game, &(game->sprite_txt), game->sprite_txt.filename);
 }
 
 t_bool		init_sprites(t_game *game)
@@ -30,14 +31,14 @@ t_bool		init_sprites(t_game *game)
 	int		j;
 	int		sprite_i;
 
-	if (!(game->sprites = ft_calloc(game->nb_sprites * sizeof(t_sprite))))
+	if (!(game->sprites = ft_calloc(game->nb_sprites, sizeof(t_sprite))))
 		return (FALSE);
 	i = 0;
 	sprite_i = 0;
-	while (i < game->scr_h)
+	while (i < game->map_h)
 	{
 		j = 0;
-		while (j < game->scr_w)
+		while (j < game->map_w)
 		{
 			if (game->map[i][j] == 2)
 			{
@@ -63,7 +64,7 @@ t_bool		finish_init(t_game *game)
 	init_textures(game);
 	if (!init_sprites(game))
 		return (FALSE);
-	if (!(game->depth_buffer = ft_calloc(game->scr_w, sizeof(double))))
+	if (!(game->z_buffer = ft_calloc(game->scr_w, sizeof(double))))
 		return (FALSE);
 	if (!init_screen(game))
 		return (FALSE);

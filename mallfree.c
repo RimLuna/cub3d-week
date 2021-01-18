@@ -19,8 +19,8 @@ void			free_game(t_game *game)
 	int			i;
 
 	side = N;
-	if (game->depth_buffer)
-		free(game->depth_buffer);
+	if (game->z_buffer)
+		free(game->z_buffer);
 	if (game->sprites)
 		free(game->sprites);
 	if (game->map)

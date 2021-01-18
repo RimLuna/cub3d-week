@@ -52,6 +52,14 @@ typedef struct		s_text
 	t_side			side;
 }					t_text;
 
+typedef struct		s_sprited
+{
+	double	transform[2];
+	int		x;
+	int		size;
+	int		i;
+}					t_sprited;
+
 typedef struct		s_dda
 {
 	double			side_dist[2];
@@ -99,7 +107,7 @@ typedef struct		s_game
 	int				map_w;
 	int				map_h;
 	int				nb_pixels;
-	double			*depth_buffer;
+	double			*z_buffer;
 	char			*raw_map;
 	char			**char_map;
 	int				**map;

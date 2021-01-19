@@ -1,6 +1,7 @@
 NAME =		cub3D
 
-SRCS=		keys.c \
+SRCS=		stupid_bmp.c \
+			keys.c \
 			draw.c \
 			init_necessary.c \
 			init_map.c \

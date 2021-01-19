@@ -6,7 +6,7 @@
 /*   By: rbougssi <rbougssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 16:36:24 by rbougssi          #+#    #+#             */
-/*   Updated: 2021/01/19 16:36:25 by rbougssi         ###   ########.fr       */
+/*   Updated: 2021/01/19 17:52:38 by rbougssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,9 @@ t_bool		finish_init(t_game *game)
 	game->nb_pixels = game->scr_w * game->scr_h * (game->screen.bpp >> 3);
 	if (game->save)
 	{
+		bmp_header(game);
 		game->fd_save = open("cub3d.bmp", O_RDONLY | O_CREAT, 0777);
+		exit(0);
 	}
 	else if (!(game->mlx.win = mlx_new_window(game->mlx.ptr, game->scr_w,
 			game->scr_h, "cub3D")))

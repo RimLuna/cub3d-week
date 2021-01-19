@@ -127,6 +127,7 @@ typedef struct		s_game
 	t_side			cam_dir;
 }					t_game;
 
+void				bmp_header(t_game *game);
 int					key_pressed(int key, t_game *game);
 int					key_released(int key, t_game *game);
 t_game				*game_init(int ac, char **av);

@@ -1,10 +1,16 @@
-#include "cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbougssi <rbougssi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/19 16:35:41 by rbougssi          #+#    #+#             */
+/*   Updated: 2021/01/19 16:35:42 by rbougssi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// int			lookupColor[] =
-// {
-// 	0xFFF5CC,
-// 	0xBB0055
-// };
+#include "cub3d.h"
 
 t_dda		init_dda(t_game *game, double ray[2])
 {
@@ -55,7 +61,6 @@ void		put_it(t_img screen, int i, int j, int color)
 	r = (unsigned char)(color >> 16);
 	g = (unsigned char)((color % 65536) >> 8);
 	b = (unsigned char)(color % 256);
-
 	ptr = screen.data + j * screen.size_line + i * (screen.bpp >> 3);
 	*ptr = screen.endian ? r : b;
 	*(ptr + 1) = g;
@@ -69,12 +74,12 @@ int			texture_to_color(t_img texture_img, double wall_x, double x)
 	unsigned char	g;
 	unsigned char	b;
 
-	ptr = texture_img.data + (int)(x * texture_img.height) * texture_img.size_line
+	ptr = texture_img.data + (int)(x * texture_img.height)
+		* texture_img.size_line
 		+ (int)(wall_x * texture_img.width) * (texture_img.bpp >> 3);
 	r = (unsigned char)(texture_img.endian ? *ptr : *(ptr + 2));
 	g = (unsigned char)(*(ptr + 1));
 	b = (unsigned char)(texture_img.endian ? *(ptr + 2) : *ptr);
-
 	return ((r << 16) + (g << 8) + b);
 }
 
@@ -88,16 +93,14 @@ void		draw_line(int x, t_game *game, t_text the_texture)
 
 	start = game->scr_h / 2 - the_texture.line_height / 2;
 	end = game->scr_h / 2 + the_texture.line_height / 2;
-
-	// start = start < 0 ? 0 : start;
-	// end = end >= game->scr_h ? game->scr_h - 1 : end;
 	texture_img = game->textures[the_texture.side];
 	j = 0;
 	while (j < (start < 0 ? 0 : start))
 		put_it(game->screen, x, j++, game->color_ceil);
 	while (j < (end >= game->scr_h ? game->scr_h - 1 : end))
 	{
-		color = texture_to_color(texture_img, the_texture.wall_x, ((j - start) * 1.0) / (end - start));
+		color = texture_to_color(texture_img, the_texture.wall_x,
+			((j - start) * 1.0) / (end - start));
 		put_it(game->screen, x, j++, color);
 	}
 	while (j < game->scr_h)
@@ -122,8 +125,8 @@ void		dda(t_game *game, double ray[2], int i)
 		? game->pos[1] + texture.wall_dist * ray[1]
 		: game->pos[0] + texture.wall_dist * ray[0];
 	texture.wall_x -= floor(texture.wall_x);
-	texture.line_height = texture.wall_dist > 0 ? game->scr_h / texture.wall_dist : 2147483647;
-
+	texture.line_height = texture.wall_dist > 0
+		? game->scr_h / texture.wall_dist : 2147483647;
 	draw_line(i, game, texture);
 }
 
@@ -182,7 +185,8 @@ void		sort_sprites(t_game *game)
 	}
 }
 
-void		ver_sprite(t_game *game, t_sprited sprited, int i, int sprite_box_x[2])
+void		ver_sprite(t_game *game, t_sprited sprited,
+	int i, int sprite_box_x[2])
 {
 	int		sprite_box_y[2];
 	int		j;
@@ -191,11 +195,13 @@ void		ver_sprite(t_game *game, t_sprited sprited, int i, int sprite_box_x[2])
 	sprite_box_y[0] = game->scr_h / 2 - sprited.size / 2;
 	sprite_box_y[1] = game->scr_h / 2 + sprited.size / 2;
 	j = (sprite_box_y[0] < 0) ? 0 : sprite_box_y[0];
-	while (j < (sprite_box_y[1] >= game->scr_h ? game->scr_h - 1 : sprite_box_y[1]))
+	while (j < (sprite_box_y[1] >= game->scr_h
+		? game->scr_h - 1 : sprite_box_y[1]))
 	{
 		color = texture_to_color(game->sprites[sprited.i].texture,
 			((i - sprite_box_x[0]) * 1.0) / (sprite_box_x[1] - sprite_box_x[0]),
-			((j - sprite_box_y[0]) * 1.0) / (sprite_box_y[1] - sprite_box_y[0]));
+			((j - sprite_box_y[0]) * 1.0)
+				/ (sprite_box_y[1] - sprite_box_y[0]));
 		if (color != 0)
 			put_it(game->screen, i, j, color);
 		j++;
@@ -210,9 +216,11 @@ void		draw_sprite(t_game *game, t_sprited sprited)
 	sprite_box_x[0] = sprited.x - sprited.size / 2;
 	sprite_box_x[1] = sprited.x + sprited.size / 2;
 	i = (sprite_box_x[0] < 0) ? 0 : sprite_box_x[0];
-	while (i <= (sprite_box_x[1] >= game->scr_w ? game->scr_w - 1 : sprite_box_x[1]))
+	while (i <= (sprite_box_x[1] >= game->scr_w
+		? game->scr_w - 1 : sprite_box_x[1]))
 	{
-		if (sprited.transform[1] > 0 && sprited.transform[1] < game->z_buffer[i])
+		if (sprited.transform[1] > 0
+			&& sprited.transform[1] < game->z_buffer[i])
 			ver_sprite(game, sprited, i, sprite_box_x);
 		i++;
 	}
@@ -220,31 +228,12 @@ void		draw_sprite(t_game *game, t_sprited sprited)
 
 void		spr1tes(t_game *game)
 {
-	/**
-	 * while raycasting walls, store perp distance of each
-	 * vertical stripe
-	 * calculate distance from each sprite to player
-	 * use distance to sort sprites
-	 * project sprite on the cam plane (in 2D)
-	 * => sub(player_pos, sprite_pos)
-	 * => then multiply the result with
-	 * inverse on the 2x2 cam matrix
-	 * calculate size of sprite using perp distance
-	 * draw sprite vertical stripe
-	 * BUT dont draw verStripe if the distance is further
-	 * away than 1D ZBuffer of the walls of curr_stripe
-	 * draw vertical stripe pixel by pixel
-	 * make sure there's an invisible color
-	 * or all stripes will look like rectangles?
-	 */
 	t_sprited		sprited;
 	double			s_pos[2];
 	double			inv_det;
 
 	calculate_each_distance(game);
 	sort_sprites(game);
-	// printf("%f %f\n", game->sprites[0].distance, game->sprites[1].distance);
-
 	sprited.i = 0;
 	while (sprited.i < game->nb_sprites)
 	{

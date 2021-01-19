@@ -13,9 +13,6 @@
 # define SPEED 15
 # define TURN 0.05
 
-/**
- * https://github.com/Adgeff/mlx_keycode/blob/master/mlx_keycode.h
- */
 # define KEY_A 0
 # define KEY_S 1
 # define KEY_D 2
@@ -130,20 +127,12 @@ typedef struct		s_game
 	t_side			cam_dir;
 }					t_game;
 
-/**
- * keys
- */
 int					key_pressed(int key, t_game *game);
 int					key_released(int key, t_game *game);
-
 t_game				*game_init(int ac, char **av);
 t_bool				finish_init(t_game *game);
 void				init_camera(t_game *game);
 t_bool				init_screen(t_game *game);
-
-/**
- * draw
- */
 void				draw(t_game *game);
 void				wallz(t_game *game);
 void				spr1tes(t_game *game);
@@ -152,15 +141,9 @@ void				draw_line(int x, t_game *game, t_text the_texture);
 void				put_it(t_img screen, int i, int j, int color);
 void				dda(t_game *game, double ray[2], int i);
 t_dda				init_dda(t_game *game, double ray[2]);
-t_bool				is_hit(t_game *game, t_dda *ddata, t_text *texture, double ray[2]);
-/**
- * vectors
- */
+t_bool				is_hit(t_game *game, t_dda *ddata,
+		t_text *texture, double ray[2]);
 void				v_scale(double a, double v[2], double u[2]);
-
-/**
- * all parse
- */
 void				parse_file(t_game *game);
 void				parse_line(t_game *game, char *line, int ret);
 void				parse_res(t_game *game, char *pline);
@@ -170,24 +153,13 @@ void				parse_else(t_game *game, char *pline, int ret);
 void				check_before(t_game *game);
 void				parse_map1(t_game *game, char *pline);
 t_bool				parse_map2(t_game *game);
-
-/**
- * error
- */
 void				quit(t_game *game, int ret);
 void				parserror(t_game *game, char *msg);
-
-/**
- * utils
- */
 int					ft_strcmp(char *s1, char *s2);
 int					atonum(char *s);
 char				*ft_trim(char *str);
 char				*rmempty(char *pline);
 int					whereis(char c, char *s);
-/**
- * mallfree
- */
 void				*ft_calloc(int count, int size);
 void				free_game(t_game *game);
 #endif

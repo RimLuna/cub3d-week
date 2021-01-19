@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbougssi <rbougssi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/19 16:36:00 by rbougssi          #+#    #+#             */
+/*   Updated: 2021/01/19 16:36:01 by rbougssi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 int			ft_strcmp(char *s1, char *s2)
@@ -36,7 +48,6 @@ char		*ft_trim(char *str)
 	return (str);
 }
 
-
 char		*rmempty(char *pline)
 {
 	int		i;
@@ -51,7 +62,8 @@ char		*rmempty(char *pline)
 			nb_spaces++;
 		i++;
 	}
-	if (!(new_pline = malloc((ft_strlen(pline) - nb_spaces + 1) * sizeof(char))))
+	if (!(new_pline = malloc((ft_strlen(pline)
+		- nb_spaces + 1) * sizeof(char))))
 		return (NULL);
 	i = 0;
 	while (*pline)
@@ -64,7 +76,7 @@ char		*rmempty(char *pline)
 	return (new_pline);
 }
 
-int				whereis(char c, char *s)
+int			whereis(char c, char *s)
 {
 	int	i;
 

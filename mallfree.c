@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mallfree.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbougssi <rbougssi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/19 16:35:36 by rbougssi          #+#    #+#             */
+/*   Updated: 2021/01/19 16:35:38 by rbougssi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void			*ft_calloc(int count, int size)
@@ -13,16 +25,10 @@ void			*ft_calloc(int count, int size)
 	return ((void *)ptr);
 }
 
-void			free_game(t_game *game)
+void			free_map(t_game *game)
 {
-	t_side		side;
-	int			i;
+	int		i;
 
-	side = N;
-	if (game->z_buffer)
-		free(game->z_buffer);
-	if (game->sprites)
-		free(game->sprites);
 	if (game->map)
 	{
 		i = -1;
@@ -30,6 +36,17 @@ void			free_game(t_game *game)
 			free(game->map[i]);
 		free(game->map);
 	}
+}
+
+void			free_game(t_game *game)
+{
+	t_side		side;
+
+	side = N;
+	if (game->z_buffer)
+		free(game->z_buffer);
+	if (game->sprites)
+		free(game->sprites);
 	while (side <= E)
 	{
 		if (game->textures[side].filename)

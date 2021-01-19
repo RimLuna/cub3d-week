@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbougssi <rbougssi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/19 16:36:24 by rbougssi          #+#    #+#             */
+/*   Updated: 2021/01/19 16:36:25 by rbougssi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 t_bool		load_texture(t_game *game, t_img *texture, char *filename)
@@ -87,9 +99,8 @@ t_game		*game_init(int ac, char **av)
 		return (NULL);
 	if (ac < 2)
 		parserror(game, "where the f is the file\n");
-	else 
-		if (ft_strcmp(av[1] + ft_strlen(av[1]) - 4, ".cub") != 0)
-			parserror(game, "ext invalid!!\n");
+	else if (ft_strcmp(av[1] + ft_strlen(av[1]) - 4, ".cub") != 0)
+		parserror(game, "ext invalid!!\n");
 	if ((game->fd = open(av[1], O_RDONLY)) < 0 ||
 				(open(av[1], O_DIRECTORY) != -1))
 		parserror(game, "no file or is it a dir??\n");

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_file.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbougssi <rbougssi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/19 16:35:44 by rbougssi          #+#    #+#             */
+/*   Updated: 2021/01/19 16:35:44 by rbougssi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void				check_before(t_game *game)
@@ -56,7 +68,7 @@ void				parse_file(t_game *game)
 		free(line);
 		i++;
 		if (ret == 0)
-			break;
+			break ;
 	}
 	if (ret == -1)
 		parserror(game, "weird file!\n");

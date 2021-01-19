@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   keys.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbougssi <rbougssi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/19 16:36:27 by rbougssi          #+#    #+#             */
+/*   Updated: 2021/01/19 16:36:28 by rbougssi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 int		key_pressed(int key, t_game *game)
@@ -19,7 +31,6 @@ int		key_pressed(int key, t_game *game)
 	return (TRUE);
 }
 
-
 int		key_released(int key, t_game *game)
 {
 	if (key == KEY_A)
@@ -36,4 +47,3 @@ int		key_released(int key, t_game *game)
 		game->ctrls.right = FALSE;
 	return (TRUE);
 }
-

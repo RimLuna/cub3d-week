@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbougssi <rbougssi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/19 16:35:50 by rbougssi          #+#    #+#             */
+/*   Updated: 2021/01/19 16:35:51 by rbougssi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 #include <stdio.h>
 
-void		exit_hook(t_game *game)
+int			exit_hook(t_game *game)
 {
 	quit(game, SUCCESS);
+	return (TRUE);
 }
 
 t_bool		move(t_game *game)
@@ -25,7 +38,6 @@ t_bool		move(t_game *game)
 		dx = game->cam_plane[0] * (game->ctrls.d ? speed : -speed);
 		dy = game->cam_plane[1] * (game->ctrls.d ? speed : -speed);
 	}
-	
 	if (game->map[(int)(game->pos[0] + dx)][(int)(game->pos[1] + dy)] != 1)
 	{
 		game->pos[0] += dx;
@@ -34,7 +46,7 @@ t_bool		move(t_game *game)
 	return (TRUE);
 }
 
-t_bool	rotate(t_game *game)
+t_bool		rotate(t_game *game)
 {
 	double	dir;
 	double	angle;
@@ -65,6 +77,7 @@ t_bool		this_game_is_stupid(t_game *game)
 int			main(int ac, char **av)
 {
 	t_game		*game;
+
 	if (!(game = game_init(ac, av)))
 		return (ERROR);
 	draw(game);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_things.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbougssi <rbougssi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/19 16:35:47 by rbougssi          #+#    #+#             */
+/*   Updated: 2021/01/19 16:35:47 by rbougssi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void		parse_res(t_game *game, char *pline)
@@ -17,8 +29,10 @@ void		parse_res(t_game *game, char *pline)
 	pline = rmempty(pline);
 	if (game->scr_h == 0 || game->scr_w == 0 || ft_strlen(pline) > 0)
 		parserror(game, "fcking res\n");
-	game->scr_w = (game->scr_w > 2560) ? 2560 : (game->scr_w < 800 ? 800 : game->scr_w);
-	game->scr_h = (game->scr_h > 1440) ? 1440 : (game->scr_h < 480 ? 480 : game->scr_h);
+	game->scr_w = game->scr_w > 2560 ? 2560 : game->scr_w;
+	game->scr_w = game->scr_w < 800 ? 800 : game->scr_w;
+	game->scr_h = game->scr_h > 1440 ? 1440 : game->scr_h;
+	game->scr_h = game->scr_h < 480 ? 480 : game->scr_h;
 	free(pline);
 }
 
@@ -62,10 +76,7 @@ void		parse_color(t_game *game, char *pline, int which)
 		color = (color << 8) + atonum(pline);
 		while (*pline >= '0' && *pline <= '9')
 			pline++;
-		if (*pline == ',' || i == 3)
-			pline++;
-		else
-			parserror(game, "thats not a color!\n");
+		(*pline == ',' || i == 3) ? pline++ : parserror(game, "not a color!\n");
 	}
 	if (which == 'F')
 		game->color_floor = color;

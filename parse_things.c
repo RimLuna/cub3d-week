@@ -26,6 +26,8 @@ void		parse_res(t_game *game, char *pline)
 	game->scr_h = atonum(pline);
 	while (*pline >= '0' && *pline <= '9')
 		pline++;
+	if (game->scr_w < 0 || game->scr_h < 0)
+		parserror(game,"OVERFLOW!\n");
 	pline = rmempty(pline);
 	if (game->scr_h == 0 || game->scr_w == 0 || ft_strlen(pline) > 0)
 		parserror(game, "fcking res\n");
@@ -55,6 +57,13 @@ void		parse_text(t_game *game, char *pline, int text)
 	}
 }
 
+t_bool		check(int color)
+{
+	if (color >= 0 && color <= 255)
+		return (TRUE);
+	return (FALSE);
+}
+
 void		parse_color(t_game *game, char *pline, int which)
 {
 	int		color;
@@ -73,7 +82,8 @@ void		parse_color(t_game *game, char *pline, int which)
 			pline++;
 		if (*pline > '9' || *pline < '0')
 			parserror(game, "thats not a color!\n");
-		color = (color << 8) + atonum(pline);
+		check(atonum(pline)) ? color = (color << 8) + atonum(pline)
+			: parserror(game, "color?!\n");
 		while (*pline >= '0' && *pline <= '9')
 			pline++;
 		(*pline == ',' || i == 3) ? pline++ : parserror(game, "not a color!\n");

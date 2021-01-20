@@ -16,16 +16,16 @@ SRCS=		stupid_bmp.c \
 
 FLAGS =		-Wall -Wextra
 
-MLX_INC =		/usr/X11/include
-MLX_LIB =		/usr/X11/lib
-MLX_FLAGS =	-lX11 -lXext
-MLX_FLAGS += -L/usr/X11/lib /usr/X11/lib/libmlx.a -lXext -lX11 -lbsd
-
 # mac
 MLXDIR = ./mlx
 MLX_FLAGS = -framework OpenGL -framework AppKit
 MLX_INC = $(MLXDIR)
 MLX_LIB = $(addprefix $(MLXDIR)/,libmlx.a)
+
+MLX_INC =		/usr/X11/include
+MLX_LIB =		/usr/X11/lib
+MLX_FLAGS =	-lX11 -lXext
+MLX_FLAGS += -L/usr/X11/lib /usr/X11/lib/libmlx.a -lXext -lX11 -lbsd
 
 all:		$(NAME) $(MLX_LIB)
 
@@ -37,10 +37,10 @@ $(MLX_LIB):
 
 clean:
 			rm -rf $(SRCS:.c=.o)
-			make -C $(MLXDIR) clean
+			# make -C $(MLXDIR) clean
 
 fclean:		clean
 			rm -f $(NAME)
-			make -C $(MLXDIR) fclean
+			# make -C $(MLXDIR) fclean
 
 re:			fclean all 

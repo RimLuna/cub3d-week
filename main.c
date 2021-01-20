@@ -15,7 +15,7 @@
 
 int			exit_hook(t_game *game)
 {
-	quit(game, SUCCESS);
+	die(game, SUCCESS);
 	return (TRUE);
 }
 
@@ -81,11 +81,13 @@ int			main(int ac, char **av)
 	if (!(game = game_init(ac, av)))
 		return (ERROR);
 	draw(game);
+	if (game->save)
+		die(game, SUCCESS);
 	mlx_hook(game->mlx.win, 2, 0, &key_pressed, game);
 	mlx_hook(game->mlx.win, 3, 0, &key_released, game);
 	mlx_hook(game->mlx.win, 17, 0, &exit_hook, game);
 	mlx_loop_hook(game->mlx.ptr, this_game_is_stupid, game);
 	mlx_loop(game->mlx.ptr);
-	quit(game, SUCCESS);
+	die(game, SUCCESS);
 	return (SUCCESS);
 }

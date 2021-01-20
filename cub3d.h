@@ -154,7 +154,7 @@ void				parse_else(t_game *game, char *pline, int ret);
 void				check_before(t_game *game);
 void				parse_map1(t_game *game, char *pline);
 t_bool				parse_map2(t_game *game);
-void				quit(t_game *game, int ret);
+void				die(t_game *game, int ret);
 void				parserror(t_game *game, char *msg);
 int					ft_strcmp(char *s1, char *s2);
 int					atonum(char *s);

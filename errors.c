@@ -12,7 +12,7 @@
 
 #include "cub3d.h"
 
-void				quit(t_game *game, int ret)
+void				die(t_game *game, int ret)
 {
 	free_game(game);
 	exit(ret);

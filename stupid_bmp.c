@@ -12,22 +12,38 @@
 
 #include "cub3d.h"
 
-void		bmp_header(t_game *game)
+void	put_bytes(char *dest, int nb, int nb_bytes)
 {
-	char		header[54];
+	int		shift;
+	int		i;
+
+	i = nb_bytes - 1;
+	shift = (nb_bytes > 1) ? (nb_bytes - 1) * 8 : 0;
+	while (shift > 0)
+	{
+		dest[i] = (nb >> shift) & 0xFF;
+		shift -= 8;
+		i--;
+	}
+	dest[i] = nb & 0xFF;
+}
+
+void	bmp_header(t_game *game)
+{
+	char	header[54];
 
 	header[0] = 'B';
 	header[1] = 'M';
-	header[2] = get_bytes(54 + world->nb_pixels, 4);
-	number_to_mem(&header[6], 0, 4);
-	number_to_mem(&header[10], 54, 4);
-	number_to_mem(&header[14], 40, 4);
-	number_to_mem(&header[18], world->scr_width, 4);
-	number_to_mem(&header[22], world->scr_height, 4);
-	number_to_mem(&header[26], 1, 2);
-	number_to_mem(&header[28], world->screen.bpp, 2);
-	number_to_mem(&header[30], 0, 4);
-	number_to_mem(&header[34], world->nb_pixels, 4);
-	number_to_mem(&header[38], 0, 16);
-	write(world->fd_save, header, 54);
+	put_bytes(&header[2], 54 + game->nb_pixels, 4);
+	put_bytes(&header[6], 0, 4);
+	put_bytes(&header[10], 54, 4);
+	put_bytes(&header[14], 40, 4);
+	put_bytes(&header[18], game->scr_w, 4);
+	put_bytes(&header[22], game->scr_h, 4);
+	put_bytes(&header[26], 1, 2);
+	put_bytes(&header[28], game->screen.bpp, 2);
+	put_bytes(&header[30], 0, 4);
+	put_bytes(&header[34], game->nb_pixels, 4);
+	put_bytes(&header[38], 0, 16);
+	write(game->fd_save, header, 54);
 }

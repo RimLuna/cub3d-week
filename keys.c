@@ -15,7 +15,7 @@
 int		key_pressed(int key, t_game *game)
 {
 	if (key == KEY_ESC)
-		quit(game, SUCCESS);
+		die(game, SUCCESS);
 	else if (key == KEY_A)
 		game->ctrls.a = TRUE;
 	else if (key == KEY_D)

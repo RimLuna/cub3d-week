@@ -33,9 +33,6 @@ t_dda		init_dda(t_game *game, double ray[2])
 
 t_bool		is_hit(t_game *game, t_dda *ddata, t_text *texture, double ray[2])
 {
-	t_bool		hit;
-
-	hit = FALSE;
 	if (ddata->side_dist[0] < ddata->side_dist[1])
 	{
 		ddata->side_dist[0] += ddata->delta_dist[0];
@@ -253,10 +250,56 @@ void		spr1tes(t_game *game)
 	}
 }
 
+int		get_screen_pixel(t_img screen, int i, int j)
+{
+	char			*ptr;
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+
+	ptr = screen.data + j * screen.size_line + i * (screen.bpp >> 3);
+	r = (unsigned char)(screen.endian ? *ptr : *(ptr + 2));
+	g = (unsigned char)(*(ptr + 1));
+	b = (unsigned char)(screen.endian ? *(ptr + 2) : *ptr);
+	return ((r << 16) + (g << 8) + b);
+}
+
+void	flip_pixels(t_game *game)
+{
+	int		i;
+	int		j;
+	int		tmp;
+
+	i = 0;
+	while (i < game->scr_w)
+	{
+		j = 0;
+		while (j < game->scr_h / 2)
+		{
+			tmp = get_screen_pixel(game->screen, i, j);
+			put_it(game->screen, i, j,
+				get_screen_pixel(game->screen, i, game->scr_h - j - 1));
+			put_it(game->screen, i, game->scr_h - j - 1, tmp);
+			j++;
+		}
+		i++;
+	}
+}
+
+void		ugh_bmp(t_game *game)
+{
+	flip_pixels(game);
+	write(game->fd_save, game->screen.data, game->nb_pixels);
+	close(game->fd_save);
+}
+
 void		draw(t_game *game)
 {
 	wallz(game);
 	spr1tes(game);
-	mlx_put_image_to_window(game->mlx.ptr, game->mlx.win,
-		game->screen.ptr, 0, 0);
+	if (game->save)
+		ugh_bmp(game);
+	else
+		mlx_put_image_to_window(game->mlx.ptr, game->mlx.win,
+			game->screen.ptr, 0, 0);
 }

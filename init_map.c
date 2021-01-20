@@ -130,6 +130,6 @@ t_bool		parse_map2(t_game *game)
 	init_map(game);
 	check_map(game);
 	if (game->error)
-		quit(game, ERROR);
+		die(game, ERROR);
 	return (TRUE);
 }

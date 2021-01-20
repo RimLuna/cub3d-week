@@ -83,9 +83,8 @@ t_bool		finish_init(t_game *game)
 	game->nb_pixels = game->scr_w * game->scr_h * (game->screen.bpp >> 3);
 	if (game->save)
 	{
+		game->fd_save = open("cub3d.bmp", O_WRONLY | O_CREAT, 0777);
 		bmp_header(game);
-		game->fd_save = open("cub3d.bmp", O_RDONLY | O_CREAT, 0777);
-		exit(0);
 	}
 	else if (!(game->mlx.win = mlx_new_window(game->mlx.ptr, game->scr_w,
 			game->scr_h, "cub3D")))
@@ -110,7 +109,7 @@ t_game		*game_init(int ac, char **av)
 	if (game->error)
 	{
 		free(game->raw_map);
-		quit(game, ERROR);
+		die(game, ERROR);
 	}
 	game->save = (ac > 2) && (!ft_strcmp(av[2], "--save"));
 	if (!finish_init(game))

@@ -15,19 +15,19 @@
 void				check_before(t_game *game)
 {
 	if (!game->scr_w)
-		parserror(game, "where s the resolution??\n");
+		p_err(game, "where s the resolution??\n");
 	else if (!game->textures[N].filename)
-		parserror(game, "where s the north texture??\n");
+		p_err(game, "where s the north texture??\n");
 	else if (!game->textures[W].filename)
-		parserror(game, "where s the west texture??\n");
+		p_err(game, "where s the west texture??\n");
 	else if (!game->textures[E].filename)
-		parserror(game, "where s the east texture??\n");
+		p_err(game, "where s the east texture??\n");
 	else if (!game->textures[S].filename)
-		parserror(game, "where s the south texture??\n");
+		p_err(game, "where s the south texture??\n");
 	else if (!game->sprite_txt.filename)
-		parserror(game, "where s the sprite texture??\n");
+		p_err(game, "where s the sprite texture??\n");
 	else if (!(game->color_set[0] & game->color_set[1]))
-		parserror(game, "where r the colors??\n");
+		p_err(game, "where r the colors??\n");
 }
 
 void				parse_line(t_game *game, char *line, int ret)
@@ -71,6 +71,6 @@ void				parse_file(t_game *game)
 			break ;
 	}
 	if (ret == -1)
-		parserror(game, "weird file!\n");
+		p_err(game, "weird file!\n");
 	close(game->fd);
 }

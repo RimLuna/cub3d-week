@@ -25,7 +25,7 @@ void		get_h(t_game *game, int i)
 	while (game->char_map[i][j])
 	{
 		if (whereis(game->char_map[i][j], " \t012NSWE") < 0)
-			parserror(game, "invalid chars in map\n");
+			p_err(game, "invalid chars in map\n");
 		j++;
 	}
 	if (ft_strlen(game->char_map[i]) > game->map_w)
@@ -41,7 +41,7 @@ void		fill_int_map(t_game *game, t_bool *is, int i, int j)
 	else if (whereis(game->char_map[i][j], "NSWE") >= 0)
 	{
 		if (*is)
-			parserror(game, "player already somewhere else\n");
+			p_err(game, "player already somewhere else\n");
 		else
 		{
 			game->cam_dir = whereis(game->char_map[i][j], "NWSE");
@@ -75,7 +75,7 @@ void		init_map(t_game *game)
 		i++;
 	}
 	if (!is_player_pos)
-		parserror(game, "where the f is the player\n");
+		p_err(game, "where the f is the player\n");
 	free(game->char_map);
 }
 
@@ -99,7 +99,7 @@ void		check_map(t_game *game)
 		while (j < game->map_w)
 		{
 			if (!check_map_ij(game, i, j))
-				parserror(game, "invalid fucking map\n");
+				p_err(game, "invalid fucking map\n");
 			j++;
 		}
 		i++;

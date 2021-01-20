@@ -18,7 +18,7 @@ void				die(t_game *game, int ret)
 	exit(ret);
 }
 
-void				parserror(t_game *game, char *msg)
+void				p_err(t_game *game, char *msg)
 {
 	if (game->error)
 		return ;

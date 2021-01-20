@@ -99,12 +99,12 @@ t_game		*game_init(int ac, char **av)
 	if (!(game = (t_game *)ft_calloc(1, sizeof(t_game))))
 		return (NULL);
 	if (ac < 2)
-		parserror(game, "where the f is the file\n");
+		p_err(game, "where the f is the file\n");
 	else if (ft_strcmp(av[1] + ft_strlen(av[1]) - 4, ".cub") != 0)
-		parserror(game, "ext invalid!!\n");
+		p_err(game, "ext invalid!!\n");
 	if ((game->fd = open(av[1], O_RDONLY)) < 0 ||
 				(open(av[1], O_DIRECTORY) != -1))
-		parserror(game, "no file or is it a dir??\n");
+		p_err(game, "no file or is it a dir??\n");
 	parse_file(game);
 	if (game->error)
 	{

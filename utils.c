@@ -22,7 +22,7 @@ int			ft_strcmp(char *s1, char *s2)
 	return (*s1 - *s2);
 }
 
-int			atonum(char *s)
+int			a2n(char *s)
 {
 	int		n;
 

@@ -2,8 +2,8 @@ R 100 100
 NO ./textures/metro.xpm
 SO ./textures/text_stalin.xpm
 WE ./textures/wood.xpm
-EA ./walls/wall2.xpm
-S ./sprites/dead.xpm
+EA ./textures/wall2.xpm
+S ./textures/text_stalin.xpm
 C 0,0,255
 F 0,255,0
 11111111111111111111

@@ -71,7 +71,7 @@ char	*mlx_int_static_line(char **xpm_data,int *pos,int size)
       len = len2;
     }
   /* strcpy(copy,str); */
-  strcpy(copy, str, len2+1);
+  strlcpy(copy, str, len2+1);
   return (copy);
 }
 

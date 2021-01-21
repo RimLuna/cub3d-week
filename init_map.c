@@ -6,7 +6,7 @@
 /*   By: rbougssi <rbougssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 16:36:17 by rbougssi          #+#    #+#             */
-/*   Updated: 2021/01/19 16:36:18 by rbougssi         ###   ########.fr       */
+/*   Updated: 2021/01/21 12:13:18 by rbougssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,32 +104,4 @@ void		check_map(t_game *game)
 		}
 		i++;
 	}
-}
-
-t_bool		parse_map2(t_game *game)
-{
-	int			i;
-	char		*p;
-
-	i = 0;
-	game->map_h = 0;
-	while (game->raw_map[i])
-	{
-		if (game->raw_map[i] == '\n')
-			game->map_h++;
-		i++;
-	}
-	if (!(game->char_map = ft_calloc(game->map_h, sizeof(char *))))
-		return (FALSE);
-	p = game->raw_map;
-	i = 0;
-	game->map_w = 0;
-	while (i < game->map_h)
-		get_h(game, i++);
-	free(p);
-	init_map(game);
-	check_map(game);
-	if (game->error)
-		die(game, ERROR);
-	return (TRUE);
 }

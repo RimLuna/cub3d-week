@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rbougssi <rbougssi@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/21 12:18:25 by rbougssi          #+#    #+#             */
+/*   Updated: 2021/01/21 12:18:25 by rbougssi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -127,7 +139,12 @@ typedef struct		s_game
 	t_side			cam_dir;
 }					t_game;
 
+void				get_h(t_game *game, int i);
+void				init_map(t_game *game);
+void				check_map(t_game *game);
+void				ugh_bmp(t_game *game);
 void				bmp_header(t_game *game);
+void				reverse_for_bmp(t_game *game);
 int					key_pressed(int key, t_game *game);
 int					key_released(int key, t_game *game);
 t_game				*game_init(int ac, char **av);
@@ -137,7 +154,8 @@ t_bool				init_screen(t_game *game);
 void				draw(t_game *game);
 void				wallz(t_game *game);
 void				spr1tes(t_game *game);
-
+int					texture_to_color(t_img texture_img,
+		double wall_x, double x);
 void				draw_line(int x, t_game *game, t_text the_texture);
 void				put_it(t_img screen, int i, int j, int color);
 void				dda(t_game *game, double ray[2], int i);

@@ -5,14 +5,57 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rbougssi <rbougssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/19 17:03:31 by rbougssi          #+#    #+#             */
-/*   Updated: 2021/01/19 17:53:21 by rbougssi         ###   ########.fr       */
+/*   Created: 2021/01/21 11:56:13 by rbougssi          #+#    #+#             */
+/*   Updated: 2021/01/21 12:11:41 by rbougssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	put_bytes(char *dest, int nb, int nb_bytes)
+int			get_pixels_for_bmp(t_img screen, int i, int j)
+{
+	char			*ptr;
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+
+	ptr = screen.data + j * screen.size_line + i * (screen.bpp >> 3);
+	r = (unsigned char)(screen.endian ? *ptr : *(ptr + 2));
+	g = (unsigned char)(*(ptr + 1));
+	b = (unsigned char)(screen.endian ? *(ptr + 2) : *ptr);
+	return ((r << 16) + (g << 8) + b);
+}
+
+void		reverse_for_bmp(t_game *game)
+{
+	int		i;
+	int		j;
+	int		tmp;
+
+	i = 0;
+	while (i < game->scr_w)
+	{
+		j = 0;
+		while (j < game->scr_h / 2)
+		{
+			tmp = get_pixels_for_bmp(game->screen, i, j);
+			put_it(game->screen, i, j,
+				get_pixels_for_bmp(game->screen, i, game->scr_h - j - 1));
+			put_it(game->screen, i, game->scr_h - j - 1, tmp);
+			j++;
+		}
+		i++;
+	}
+}
+
+void		ugh_bmp(t_game *game)
+{
+	reverse_for_bmp(game);
+	write(game->fd_save, game->screen.data, game->nb_pixels);
+	close(game->fd_save);
+}
+
+void		put_bytes(char *dest, int nb, int nb_bytes)
 {
 	int		shift;
 	int		i;
@@ -28,7 +71,7 @@ void	put_bytes(char *dest, int nb, int nb_bytes)
 	dest[i] = nb & 0xFF;
 }
 
-void	bmp_header(t_game *game)
+void		bmp_header(t_game *game)
 {
 	char	header[54];
 

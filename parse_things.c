@@ -6,7 +6,7 @@
 /*   By: rbougssi <rbougssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 16:35:47 by rbougssi          #+#    #+#             */
-/*   Updated: 2021/01/19 16:35:47 by rbougssi         ###   ########.fr       */
+/*   Updated: 2021/01/21 12:17:47 by rbougssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,25 +91,6 @@ void		parse_color(t_game *game, char *pl, int which)
 		game->color_floor = color;
 	else
 		game->color_ceil = color;
-}
-
-void		parse_map1(t_game *game, char *pline)
-{
-	char	*tmp;
-
-	check_before(game);
-	pline = ft_trim(pline);
-	if (!game->raw_map)
-		game->raw_map = ft_strdup(pline);
-	else
-	{
-		tmp = game->raw_map;
-		game->raw_map = ft_strjoin(game->raw_map, pline);
-		free(tmp);
-	}
-	tmp = game->raw_map;
-	game->raw_map = ft_strjoin(game->raw_map, "\n");
-	free(tmp);
 }
 
 void		parse_else(t_game *game, char *pline, int ret)

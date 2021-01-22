@@ -6,7 +6,7 @@
 /*   By: rbougssi <rbougssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 16:36:24 by rbougssi          #+#    #+#             */
-/*   Updated: 2021/01/19 17:52:38 by rbougssi         ###   ########.fr       */
+/*   Updated: 2021/01/22 11:25:37 by rbougssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ t_game		*game_init(int ac, char **av)
 
 	if (!(game = (t_game *)ft_calloc(1, sizeof(t_game))))
 		return (NULL);
-	if (ac > 2)
+	if (ac > 3)
 		p_err(game, "arguments??\n");
 	else if (ac < 2)
 		p_err(game, "where is the file??\n");
@@ -113,7 +113,9 @@ t_game		*game_init(int ac, char **av)
 		free(game->raw_map);
 		die(game, ERROR);
 	}
-	game->save = (ac == 2) && (!ft_strcmp(av[2], "--save"));
+	if (ac == 3)
+		!ft_strcmp(av[2], "--save") ? game->save = 1
+			: p_err(game, "second arg??\n");
 	if (!finish_init(game))
 		return (NULL);
 	return (game);

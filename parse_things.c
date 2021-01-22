@@ -15,7 +15,7 @@
 void		parse_res(t_game *game, char *pline)
 {
 	if (game->scr_w)
-		p_err(game, "dude res is already there!\n");
+		p_err(game, "res is already there!\n");
 	while (*pline <= ' ')
 		pline++;
 	game->scr_w = a2n(pline);
@@ -30,7 +30,7 @@ void		parse_res(t_game *game, char *pline)
 		p_err(game, "OVERFLOW!\n");
 	pline = rmempty(pline);
 	if (game->scr_h == 0 || game->scr_w == 0 || ft_strlen(pline) > 0)
-		p_err(game, "fcking res\n");
+		p_err(game, "res??\n");
 	game->scr_w = game->scr_w > 2560 ? 2560 : game->scr_w;
 	game->scr_w = game->scr_w < 800 ? 800 : game->scr_w;
 	game->scr_h = game->scr_h > 1440 ? 1440 : game->scr_h;
@@ -43,7 +43,7 @@ void		parse_text(t_game *game, char *pline, int text)
 	t_img		*texture;
 
 	if (text == 4 && game->sprite_txt.filename)
-		p_err(game, "dont write the sprite texture twice, tf!!\n");
+		p_err(game, "dont write the sprite texture twice!!\n");
 	else if (text < 4 && game->textures[text].filename)
 		p_err(game, "wall texture is here already!!\n");
 	else

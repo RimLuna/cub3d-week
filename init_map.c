@@ -75,7 +75,7 @@ void		init_map(t_game *game)
 		i++;
 	}
 	if (!is_player_pos)
-		p_err(game, "where the f is the player\n");
+		p_err(game, "where is the player??\n");
 	free(game->char_map);
 }
 
@@ -99,7 +99,7 @@ void		check_map(t_game *game)
 		while (j < game->map_w)
 		{
 			if (!check_map_ij(game, i, j))
-				p_err(game, "invalid fucking map\n");
+				p_err(game, "invalid map\n");
 			j++;
 		}
 		i++;

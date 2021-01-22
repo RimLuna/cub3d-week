@@ -98,8 +98,10 @@ t_game		*game_init(int ac, char **av)
 
 	if (!(game = (t_game *)ft_calloc(1, sizeof(t_game))))
 		return (NULL);
-	if (ac < 2)
-		p_err(game, "where the f is the file\n");
+	if (ac > 2)
+		p_err(game, "arguments??\n");
+	else if (ac < 2)
+		p_err(game, "where is the file??\n");
 	else if (ft_strcmp(av[1] + ft_strlen(av[1]) - 4, ".cub") != 0)
 		p_err(game, "ext invalid!!\n");
 	if ((game->fd = open(av[1], O_RDONLY)) < 0 ||
@@ -111,7 +113,7 @@ t_game		*game_init(int ac, char **av)
 		free(game->raw_map);
 		die(game, ERROR);
 	}
-	game->save = (ac > 2) && (!ft_strcmp(av[2], "--save"));
+	game->save = (ac == 2) && (!ft_strcmp(av[2], "--save"));
 	if (!finish_init(game))
 		return (NULL);
 	return (game);

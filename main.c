@@ -6,12 +6,11 @@
 /*   By: rbougssi <rbougssi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 16:35:50 by rbougssi          #+#    #+#             */
-/*   Updated: 2021/01/22 11:20:11 by rbougssi         ###   ########.fr       */
+/*   Updated: 2021/01/24 18:43:21 by rbougssi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include <stdio.h>
 
 int			exit_hook(t_game *game)
 {

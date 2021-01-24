@@ -1,4 +1,4 @@
-R    400 400
+R    1000 400
 NO      ./textures/stone1.xpm
 SO ./textures/stone2.xpm
    WE       ./textures/stone3.xpm
